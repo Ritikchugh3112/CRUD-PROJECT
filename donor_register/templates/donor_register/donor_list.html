@@ -1,0 +1,43 @@
+{% extends "donor_register/base.html" %} {% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Full Name</td>
+            <td>Address</td>
+            <td>Mobile</td>
+            <td>Bloodgroup</td>
+            <td>medicalproblem</td>
+            <td>Image</td>
+            <td>
+                <a href="{% url 'donor_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for donor in donor_list %}
+        <tr>
+            <td>{{donor.fullname}}</td>
+            <td>{{donor.address}}</td>
+            <td>{{donor.mobile}}</td>
+            <td>{{donor.bloodgroup}}</td>
+            <td>{{donor.medicalproblem}}</td>
+            <td><img src="{{image_list.image}}" alt="" style="height:100px;object-fit: contain;"></td>
+            <td>
+                <a href="{% url 'donor_update' donor.id %}" class="btn text-secondary px-0">
+                    <i class="far fa-edit fa-lg"></i>
+                </a>
+                <form action="{% url 'donor_delete' donor.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
